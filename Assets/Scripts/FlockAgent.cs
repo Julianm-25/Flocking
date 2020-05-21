@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class FlockAgent : MonoBehaviour
 {
+    Flock agentFlock;
+    public Flock AgentFlock {  get { return agentFlock; } }
+
     private Collider2D agentCollider;
     public Collider2D AgentCollider { get { return agentCollider; } }
     private void Start()
@@ -15,6 +18,11 @@ public class FlockAgent : MonoBehaviour
             Debug.LogError("FlockAgent can't find Collider2D");
             return;
         }
+    }
+
+    public void Initialize(Flock flock)
+    {
+        agentFlock = flock;
     }
     public void Move(Vector2 velocity)
     {

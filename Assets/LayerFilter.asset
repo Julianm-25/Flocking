@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dae316d7c6369b4c9db5f59f0f86917, type: 3}
-  m_Name: CohesionBehavior
+  m_Script: {fileID: 11500000, guid: 70280637925798548824caf50d1ab92d, type: 3}
+  m_Name: LayerFilter
   m_EditorClassIdentifier: 
-  filter: {fileID: 11400000, guid: cc1f62fcca7f7f74f971619445536fef, type: 2}
+  mask:
+    serializedVersion: 2
+    m_Bits: 256
