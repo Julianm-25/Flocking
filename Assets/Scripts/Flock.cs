@@ -21,6 +21,7 @@ public class Flock : MonoBehaviour
     public float avoidanceRadiusMultiplier = 0.5f;//multiplier
     float squareMaxSpeed;
     float squareNeighborRadius;
+    public int agentsCount { get { return agents.Count; } }
     float squareAvoidanceRadius;//radius
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
     private void Start()
