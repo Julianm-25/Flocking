@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Flocks:
   - behavior: {fileID: 11400000, guid: cb4998ecd6bb36b47821b6dd536a93fd, type: 2}
-    weight: 1
+    weight: 4
   - behavior: {fileID: 11400000, guid: c0c06216002df8547bf8d3f89eabe2a4, type: 2}
     weight: 4
   - behavior: {fileID: 11400000, guid: 63489c58a29427c4cb254311cfcdc572, type: 2}
-    weight: 3
+    weight: 5
   - behavior: {fileID: 11400000, guid: e069420d89761b842a159ddeb5630f3e, type: 2}
     weight: 0.1
+  - behavior: {fileID: 11400000, guid: c99430bb1b045f7409c86a7fd862ba92, type: 2}
+    weight: 0
+  - behavior: {fileID: 11400000, guid: 46b5d35516104644bb1b002ef3f709f3, type: 2}
+    weight: 1

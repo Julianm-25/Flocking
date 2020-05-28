@@ -15,6 +15,8 @@ public class Flock : MonoBehaviour
     public float maxSpeed = 5f;
     [Range(1f, 10f)]
     public float neighborRadius = 1.5f;
+    [Range(1f, 100f)]
+    public float areaRadius = 20f;
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;//multiplier
     float squareMaxSpeed;
@@ -44,8 +46,9 @@ public class Flock : MonoBehaviour
     {
         foreach(FlockAgent agent in agents)
         {
-            List<Transform> context = GetNearbyObjects(agent);
-            Vector2 move = behavior.CalculateMove(agent, context, this);
+            List<Transform> context = GetNearbyObjects(agent, neighborRadius);
+            List<Transform> areaContext = GetNearbyObjects(agent, areaRadius);
+            Vector2 move = behavior.CalculateMove(agent, context, areaContext, this);
             move *= driveFactor;
 
             if(move.sqrMagnitude > squareMaxSpeed)
@@ -55,11 +58,10 @@ public class Flock : MonoBehaviour
             agent.Move(move);
         }
     }
-    List<Transform> GetNearbyObjects(FlockAgent agent)
+    List<Transform> GetNearbyObjects(FlockAgent agent, float radius)
     {
         List<Transform> context = new List<Transform>();
-        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighborRadius);
-
+        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, radius);
         foreach(Collider2D contextCollider in contextColliders)
         {
             if(contextCollider != agent.AgentCollider)
