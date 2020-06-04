@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 1316053617431226204, guid: 1ffb14b8283f1cf4a867d8af6f47c821,
     type: 3}
+  agents: []
   behavior: {fileID: 11400000, guid: aca6c8c46f4092045a94ba79f37b6fee, type: 2}
   startingCount: 10
   driveFactor: 10
@@ -159,6 +160,8 @@ MonoBehaviour:
   neighborRadius: 1.5
   areaRadius: 20
   avoidanceRadiusMultiplier: 0.5
+  context: []
+  areaContext: []
 --- !u!4 &111202002
 Transform:
   m_ObjectHideFlags: 0
@@ -189,7 +192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &153801990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 1316053617431226204, guid: b486453519cf369438dd94974b4a8bef,
     type: 3}
+  agents: []
   behavior: {fileID: 11400000, guid: d95890be5da20ed4c80af43bb08dd14f, type: 2}
   startingCount: 10
   driveFactor: 10
@@ -211,6 +215,8 @@ MonoBehaviour:
   neighborRadius: 1.5
   areaRadius: 20
   avoidanceRadiusMultiplier: 0.5
+  context: []
+  areaContext: []
 --- !u!4 &153801991
 Transform:
   m_ObjectHideFlags: 0
@@ -219,7 +225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153801989}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8389843, y: -0.35483265, z: -8.508242}
+  m_LocalPosition: {x: -35.66, y: 15.12, z: -8.508242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -521,7 +527,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -993,6 +999,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1615676120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615676123}
+  - component: {fileID: 1615676122}
+  - component: {fileID: 1615676121}
+  m_Layer: 0
+  m_Name: Flock_Statemachine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1615676121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615676120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2f56caa5783a74ca83b663b2f95c41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 1316053617431226204, guid: b486453519cf369438dd94974b4a8bef,
+    type: 3}
+  agents: []
+  behavior: {fileID: 0}
+  startingCount: 10
+  driveFactor: 10
+  maxSpeed: 5
+  neighborRadius: 1.5
+  areaRadius: 10
+  avoidanceRadiusMultiplier: 0.5
+  context: []
+  areaContext: []
+--- !u!114 &1615676122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615676120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51c4674b4efb3841924873c721dc61f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  changeState: 0
+  patrolBehavior: {fileID: 11400000, guid: 986d695c209e31646bbff559b8a73796, type: 2}
+  chaseBehavior: {fileID: 11400000, guid: 90490e217519cf5428b5f2fe89cfa924, type: 2}
+  filter: {fileID: 11400000, guid: 75558a8a645ab6c4e983596e46e253ab, type: 2}
+--- !u!4 &1615676123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615676120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -33.31, y: 14.7, z: -16.09375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1728523842
 GameObject:

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
     public FlockAgent agentPrefab;//
-    List<FlockAgent> agents = new List<FlockAgent>();//
+    public List<FlockAgent> agents = new List<FlockAgent>();//
     public FlockBehavior behavior;
     [Range(10, 500)]
     public int startingCount = 250;//
@@ -24,16 +24,19 @@ public class Flock : MonoBehaviour
     public int agentsCount { get { return agents.Count; } }
     float squareAvoidanceRadius;//radius
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
+    public List<Transform> context;
+    public List<Transform> areaContext;
     private void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighborRadius = neighborRadius * neighborRadius;
         squareAvoidanceRadius = squareNeighborRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;//0.5 x bigger then neighbor radius
+                                                                                                             // otherSquareAvoidanceRadius = squareNeighborRadius * otherAvoidanceRadiusMultiplier * otherAvoidanceRadiusMultiplier;
         for (int i = 0; i < startingCount; i++)
         {
             FlockAgent newAgent = Instantiate(
                 agentPrefab,
-                Random.insideUnitCircle * startingCount * AgentDensity,
+                ((Vector2)transform.position) + Random.insideUnitCircle * startingCount * AgentDensity,
                 Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                 transform
                 );
@@ -47,8 +50,8 @@ public class Flock : MonoBehaviour
     {
         foreach(FlockAgent agent in agents)
         {
-            List<Transform> context = GetNearbyObjects(agent, neighborRadius);
-            List<Transform> areaContext = GetNearbyObjects(agent, areaRadius);
+            context = GetNearbyObjects(agent, neighborRadius);
+            areaContext = GetNearbyObjects(agent, areaRadius);
             Vector2 move = behavior.CalculateMove(agent, context, areaContext, this);
             move *= driveFactor;
 
