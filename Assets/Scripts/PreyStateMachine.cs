@@ -14,7 +14,7 @@ public class PreyStateMachine : Life
     [SerializeField] private FlockBehavior HideBehavior = null;
     [SerializeField] private ContextFilter filter = null;
 
-    //Moves between waypoints
+    //Moves freely as a flock
     IEnumerator WanderState()
     {
         Debug.Log("Wander Enter");
@@ -37,7 +37,7 @@ public class PreyStateMachine : Life
         Debug.Log("Wander Exit");
         NextState();
     }
-    //Follows prey
+    //Hides from predators and attemps to put an object between them
     IEnumerator HideState()
     {
         if (flock.behavior != HideBehavior)
@@ -66,6 +66,7 @@ public class PreyStateMachine : Life
         System.Reflection.MethodInfo info = GetType().GetMethod(methodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         StartCoroutine((IEnumerator)info.Invoke(this, null));
     }
+    //assigns a state on start
     private void Start()
     {
         NextState();

@@ -8,6 +8,7 @@ public class Life : MonoBehaviour
     public bool changeState = false;
     private void Start()
     {
+        //making sure flock is assigned
         flock = GetComponent<Flock>();
         if (flock == null)
         {

@@ -61,6 +61,7 @@ public class PredatorStateMachine : Life
         Debug.Log("Chase Exit");
         NextState();
     }
+    //assigns a state on start
     private void Start()
     {
         NextState();
