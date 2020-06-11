@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39f7d8663e8a20c439ef872513232202, type: 3}
-  m_Name: ChaseCompositeBehavior
+  m_Name: HideCompositeBehavior
   m_EditorClassIdentifier: 
   Flocks:
-  - behavior: {fileID: 11400000, guid: cb4998ecd6bb36b47821b6dd536a93fd, type: 2}
-    weight: 3
-  - behavior: {fileID: 11400000, guid: c0c06216002df8547bf8d3f89eabe2a4, type: 2}
-    weight: 2
-  - behavior: {fileID: 11400000, guid: f7e2315f4b2d3f14e9bc027837fa3028, type: 2}
-    weight: 3
   - behavior: {fileID: 11400000, guid: e069420d89761b842a159ddeb5630f3e, type: 2}
-    weight: 0.5
+    weight: 1
+  - behavior: {fileID: 11400000, guid: cb4998ecd6bb36b47821b6dd536a93fd, type: 2}
+    weight: 1
   - behavior: {fileID: 11400000, guid: 63489c58a29427c4cb254311cfcdc572, type: 2}
-    weight: 3
-  - behavior: {fileID: 11400000, guid: 617244159db1ffd4da40894b97edfeeb, type: 2}
-    weight: 3
+    weight: 5
+  - behavior: {fileID: 11400000, guid: a79a07879904f23498722e7ecb12c207, type: 2}
+    weight: 1
+  - behavior: {fileID: 11400000, guid: 46b5d35516104644bb1b002ef3f709f3, type: 2}
+    weight: 1

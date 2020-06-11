@@ -2,21 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 [RequireComponent(typeof(Flock))]
-public class PredatorStateMachine : MonoBehaviour
+public class PredatorStateMachine : Life
 {
     public enum State
     {
-        Patrol, 
+        Patrol,
         Chase
     }
-    private Flock flock;
-    public State state;
-    public bool changeState = false;
     public float timer;
+    public State state;
     [SerializeField] private FlockBehavior patrolBehavior = null;
     [SerializeField] private FlockBehavior chaseBehavior = null;
     [SerializeField] private ContextFilter filter = null;
 
+    //Moves between waypoints
     IEnumerator PatrolState()
     {
         Debug.Log("Patrol Enter");
@@ -26,11 +25,11 @@ public class PredatorStateMachine : MonoBehaviour
         }
         while (state == State.Patrol)
         {
-            timer -= 1;
+            timer += Time.deltaTime;
             foreach(FlockAgent agent in flock.agents)
             {
                 List<Transform> filteredContext = (filter == null) ? flock.areaContext : filter.Filter(agent, flock.areaContext);
-                if (filteredContext.Count > 0 && timer <= 5000)
+                if (filteredContext.Count > 0 && timer >= 15)
                 {
                     state = State.Chase;
                     timer = 0;
@@ -41,6 +40,7 @@ public class PredatorStateMachine : MonoBehaviour
         Debug.Log("Patrol Exit");
         NextState();
     }
+    //Follows prey
     IEnumerator ChaseState()
     {
         if (flock.behavior != chaseBehavior)
@@ -50,15 +50,26 @@ public class PredatorStateMachine : MonoBehaviour
         Debug.Log("Chase Enter");
         while (state == State.Chase)
         {
-            timer += 1;
-            if (timer >= 5000)
+            timer += Time.deltaTime;
+            if (timer >= 15)
             {
                 state = State.Patrol;
+                timer = 0;
             }
             yield return 0;
         }
         Debug.Log("Chase Exit");
         NextState();
+    }
+    private void Start()
+    {
+        NextState();
+    }
+    public void NextState()
+    {
+        string methodName = state.ToString() + "State";
+        System.Reflection.MethodInfo info = GetType().GetMethod(methodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        StartCoroutine((IEnumerator)info.Invoke(this, null));
     }
     /*IEnumerator AnotherState()
     {
@@ -123,21 +134,4 @@ public class PredatorStateMachine : MonoBehaviour
         }
         Debug.Log("Die: Exit");
     }*/
-
-    private void Start()
-    {
-        flock = GetComponent<Flock>();
-        if(flock == null)
-        {
-            Debug.LogError("Statemachine couldn't find flock");
-        }
-        NextState();
-    }
-
-    void NextState()
-    {
-        string methodName = state.ToString() + "State";
-        System.Reflection.MethodInfo info = GetType().GetMethod(methodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        StartCoroutine((IEnumerator)info.Invoke(this,null));
-    }
 }

@@ -1,21 +1,76 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class PreyStateMachine : MonoBehaviour
+public class PreyStateMachine : Life
 {
     public enum State
     {
-        Crawl,
-        Walk,
-        Die,
-        Another,
+        Wander,
+        Hide
     }
-
     public State state;
-    public bool ChangeState = false;
+    [SerializeField] private FlockBehavior wanderBehavior = null;
+    [SerializeField] private FlockBehavior HideBehavior = null;
+    [SerializeField] private ContextFilter filter = null;
 
-
-    IEnumerator AnotherState()
+    //Moves between waypoints
+    IEnumerator WanderState()
+    {
+        Debug.Log("Wander Enter");
+        if (flock.behavior != wanderBehavior)
+        {
+            flock.behavior = wanderBehavior;
+        }
+        while (state == State.Wander)
+        {
+            foreach (FlockAgent agent in flock.agents)
+            {
+                List<Transform> filteredContext = (filter == null) ? flock.areaContext : filter.Filter(agent, flock.areaContext);
+                if (filteredContext.Count > 0)
+                {
+                    state = State.Hide;
+                }
+            }
+            yield return 0;
+        }
+        Debug.Log("Wander Exit");
+        NextState();
+    }
+    //Follows prey
+    IEnumerator HideState()
+    {
+        if (flock.behavior != HideBehavior)
+        {
+            flock.behavior = HideBehavior;
+        }
+        Debug.Log("Hide Enter");
+        while (state == State.Hide)
+        {
+            foreach (FlockAgent agent in flock.agents)
+            {
+                List<Transform> filteredContext = (filter == null) ? flock.areaContext : filter.Filter(agent, flock.areaContext);
+                if (filteredContext.Count == 0)
+                {
+                    state = State.Wander;
+                }
+            }
+            yield return 0;
+        }
+        Debug.Log("Hide Exit");
+        NextState();
+    }
+    public void NextState()
+    {
+        string methodName = state.ToString() + "State";
+        System.Reflection.MethodInfo info = GetType().GetMethod(methodName, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        StartCoroutine((IEnumerator)info.Invoke(this, null));
+    }
+    private void Start()
+    {
+        NextState();
+    }
+    /*IEnumerator AnotherState()
     {
         Debug.Log("Another: Enter");
         while (state == State.Another)
@@ -77,21 +132,5 @@ public class PreyStateMachine : MonoBehaviour
             yield return 0;
         }
         Debug.Log("Die: Exit");
-    }
-
-    private void Start()
-    {
-        NextState();
-    }
-
-    void NextState()
-    {
-        string methodName = state.ToString() + "State";
-        System.Reflection.MethodInfo info =
-            GetType().GetMethod(methodName,
-                                   System.Reflection.BindingFlags.NonPublic |
-                                   System.Reflection.BindingFlags.Instance);
-
-        StartCoroutine((IEnumerator)info.Invoke(this,null));
-    }
+    }*/
 }
